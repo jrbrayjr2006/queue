@@ -1,0 +1,10 @@
+---
+applications:
+- name: flood-queue
+  memory: 1024M
+  instances: 1
+  host: flood-sample
+  path: target/queue-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack
+  services:
+  - spring-rabbitmq
