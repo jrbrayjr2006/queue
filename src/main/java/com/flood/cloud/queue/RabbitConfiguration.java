@@ -1,32 +1,28 @@
 package com.flood.cloud.queue;
 
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Exchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.amqp.rabbit.connection.Connection;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.SimpleRoutingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 public class RabbitConfiguration {
 
-    private static final String TEST_QUEUE_NAME = "TestQueue";
+    public static final String TEST_QUEUE_NAME = "testQueue";
 
-    private static final String TEST_EXCHANGE_NAME = "TestExchange";
+    public static final String TEST_EXCHANGE_NAME = "testExchange.topic";
 
-    private static final String TEST_TOPIC_EXCHANGE ="TestTopicExchange";
+    private static final String TEST_TOPIC_EXCHANGE ="testTopicExchange";
 
-    private static final String TEST_ROUTE_KEY = "TestRoutingKey";
+    public static final String TEST_ROUTE_KEY = "testRoutingKey";
 
     @Value("${rabbitmq.hostname}")
     String hostname;
@@ -45,11 +41,6 @@ public class RabbitConfiguration {
     public Queue testQueue() {
         return new Queue(TEST_QUEUE_NAME);
     }
-
-//    @Bean
-//    public Exchange testExchange() {
-//        return new DirectExchange(TEST_EXCHANGE_NAME);
-//    }
 
     @Bean
     public Exchange testTopicExchange() {

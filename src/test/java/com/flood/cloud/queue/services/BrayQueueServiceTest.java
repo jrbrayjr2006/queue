@@ -36,11 +36,11 @@ public class BrayQueueServiceTest {
     @Test
     public void shouldCallRabbitTemplate() {
         //Given
-        String exchange = "TestExchange";
-        String routingKey = "TestRoutingKey";
+        String exchange = "testExchange";
+        String routingKey = "testRoutingKey";
         byte[] messageBody = "{'testKey': 'testValue'}".getBytes();
         MessageProperties messageProperties = new MessageProperties();
-        messageProperties.setConsumerQueue("TestQueue");
+        messageProperties.setConsumerQueue("testQueue");
         Message message = new Message(messageBody,messageProperties);
         //Message message = mock(Message.class);
 
@@ -50,7 +50,7 @@ public class BrayQueueServiceTest {
         brayQueueService.sendToTestExchange(routingKey, exchange, message);
 
         //Then - the rabbitTemplate convertAndSend should be called
-        verify(mockRabbitTemplate, times(1)).convertSendAndReceive(eq("TestRoutingKey"),eq("TestExchange"),messageArgumentCaptor.capture());
+        verify(mockRabbitTemplate, times(1)).convertSendAndReceive(eq("testRoutingKey"),eq("testExchange"),messageArgumentCaptor.capture());
     }
 
 }
