@@ -1,9 +1,7 @@
 package com.flood.cloud.queue;
 
 
-import org.springframework.amqp.core.Exchange;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.SimpleRoutingConnectionFactory;
@@ -20,7 +18,7 @@ public class RabbitConfiguration {
 
     public static final String TEST_EXCHANGE_NAME = "testExchange.topic";
 
-    private static final String TEST_TOPIC_EXCHANGE ="testTopicExchange";
+    private static final String TEST_BINDING_NAME ="testBinding";
 
     public static final String TEST_ROUTE_KEY = "testRoutingKey";
 
@@ -46,6 +44,18 @@ public class RabbitConfiguration {
     public Exchange testTopicExchange() {
         TopicExchange topicExchange = new TopicExchange(TEST_EXCHANGE_NAME);
         return topicExchange;
+    }
+
+    /**
+     * <p>
+     *     Binds an exchange to a queue for message routing
+     * </p>
+     * @return
+     */
+    @Bean
+    public Binding testBinding() {
+        Binding testBinding = BindingBuilder.bind(testQueue()).to(testTopicExchange()).with(TEST_ROUTE_KEY).noargs();
+        return testBinding;
     }
 
     @Bean
